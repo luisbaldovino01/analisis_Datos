@@ -3,7 +3,9 @@ import streamlit as st
 import plotly.express as px
 from limpieza import limpiar_dataset
 
-dataset = pd.read_excel("icfes_depto_sucre.xlsx")
+
+with st.spinner("Cargando datos... :)"):
+    dataset = pd.read_excel("icfes_depto_sucre.xlsx")
 
 tab1, tab2 = st.tabs(['Exploración','Limpieza'])
 
@@ -20,6 +22,11 @@ with tab1:
     # TIPOS DE DATOS DEL DATASET
     st.subheader("Tipos de datos")
     st.write(dataset.dtypes)
+    
+    # REGISTROS POR PERIODOS
+    st.subheader("Registros por peridos")
+    registrosp = dataset.groupby(["PERIODO"]).size().sort_index()
+    st.write(registrosp)
 
     # CULUMNAS CON CAMPOS NULOS
     st.subheader("Columnas con valores nulos")
@@ -46,7 +53,9 @@ with tab2:
     st.subheader("Limpieza de datos")
 
     dataset_limpio = limpiar_dataset(dataset)
-
+    
+    filas, columnas = dataset_limpio.shape
+    st.write(f"El dataset tiene {filas} filas y {columnas} columnas")
     st.write("Vista previa del dataset limpio")
     st.write(dataset_limpio.head(10))
 
