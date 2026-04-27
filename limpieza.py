@@ -12,6 +12,5 @@ def limpiar_dataset(dataset: pd.DataFrame) -> pd.DataFrame:
     
     dataset_copia = dataset_copia.drop(columns=columnas_eliminar)
     
-    
     return dataset_copia
     
